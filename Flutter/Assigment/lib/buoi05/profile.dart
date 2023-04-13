@@ -15,14 +15,19 @@ class _Profile extends State<Profile>{
 
   @override
   Widget build(BuildContext context){
-    return ListView(
-      children: [
-        Expanded(child: mainImage),
-        _tileWithTrailing(Icons.arrow_right_sharp, "Nguyen Cao Duc", "Student"),
-        _tileWithoutTrailing(Icons.email, "nguyencaoduc0922@gmail.com"),
-        _tileWithoutTrailing(Icons.phone, "0123456789"),
-        _tileNote(Icons.note, "Sinh viên năm 4 tại Đại học Cần Thơ với kinh nghiệm 2 năm làm việc tại FPT DPS Cần Thơ, 2 tháng thử việc tại TMA Solutions."),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Profile"),
+      ),
+      body: ListView(
+        children: [
+          Expanded(child: mainImage),
+          _tileWithTrailing(Icons.arrow_right_sharp, "Nguyen Cao Duc", "Student"),
+          _tileWithoutTrailing(Icons.email, "nguyencaoduc0922@gmail.com"),
+          _tileWithoutTrailing(Icons.phone, "0123456789"),
+          _tileNote(Icons.note, "Sinh viên năm 4 tại Đại học Cần Thơ với kinh nghiệm 2 năm làm việc tại FPT DPS Cần Thơ, 2 tháng thử việc tại TMA Solutions."),
+        ],
+      ),
     );
   }
 

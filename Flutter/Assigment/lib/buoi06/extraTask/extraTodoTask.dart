@@ -25,7 +25,7 @@ class ExtraTodoTask extends StatelessWidget{
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(
-                  todos[index].title as String,
+                  todos[index].title!,
                   style: biggerFont,
                 ),
                 onTap: () {
