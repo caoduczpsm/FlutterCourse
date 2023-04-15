@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteWidget extends StatefulWidget{
@@ -61,7 +60,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget>{
               SizedBox(
                 width: 18,
                 child: SizedBox(
-                  child: Text('$_favoriteCount', style: const TextStyle(fontSize: 18),),
+                  child: Text('$_favoriteCount', style: const TextStyle(fontSize: 16),),
                 ),
               )
             ],
@@ -71,41 +70,41 @@ class _FavoriteWidgetState extends State<FavoriteWidget>{
     );
 
     var iconRow = Container(
-      padding: const EdgeInsets.all(30),
+      padding: const EdgeInsets.all(20),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Column(
             children: [
-              Icon(Icons.call, color: Colors.blueAccent[400], size: 30),
+              Icon(Icons.call, color: Colors.blueAccent[400], size: 25),
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 child: Text(
                   "CALL",
-                  style: TextStyle(color: Colors.blueAccent[400], fontSize: 16),),
+                  style: TextStyle(color: Colors.blueAccent[400], fontSize: 14),),
               )
             ],
           ),
           Column(
             children: [
-              Icon(Icons.route, color: Colors.blueAccent[400], size: 30),
+              Icon(Icons.route, color: Colors.blueAccent[400], size: 25),
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 child: Text(
                   "ROUTE",
-                  style: TextStyle(color: Colors.blueAccent[400], fontSize: 16),),
+                  style: TextStyle(color: Colors.blueAccent[400], fontSize: 14),),
               )
             ],
           ),
           Column(
             children: [
-              Icon(Icons.share, color: Colors.blueAccent[400], size: 30,),
+              Icon(Icons.share, color: Colors.blueAccent[400], size: 25,),
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 child: Text(
                   "SHARE",
-                  style: TextStyle(color: Colors.blueAccent[400], fontSize: 16),),
+                  style: TextStyle(color: Colors.blueAccent[400], fontSize: 14),),
               )
             ],
           ),
@@ -113,13 +112,10 @@ class _FavoriteWidgetState extends State<FavoriteWidget>{
       ),
     );
 
-    var description = Container(
-      margin: const EdgeInsets.only(top: 10),
-      child: const Text(
-        "Lake Oeschinen lies at the foot of the Bluemlisalp in the Bernese Alps. Situated 1,578 meters above sea level, it is one of the larger Alpine Lakes. A gondola ride from Kandersteg, followed by a half-four walk through pastures and pine forest, leads you to the lake, which warms to 20 degrees Celsius in the summer. Activities enjoyed here include rowing and riding the summer toboggan run.",
-        style: TextStyle(
-            fontSize: 18
-        ),
+    var description = const Text(
+      "Lake Oeschinen lies at the foot of the Bluemlisalp in the Bernese Alps. Situated 1,578 meters above sea level, it is one of the larger Alpine Lakes. A gondola ride from Kandersteg, followed by a half-four walk through pastures and pine forest, leads you to the lake, which warms to 20 degrees Celsius in the summer. Activities enjoyed here include rowing and riding the summer toboggan run.",
+      style: TextStyle(
+          fontSize: 16
       ),
     );
 

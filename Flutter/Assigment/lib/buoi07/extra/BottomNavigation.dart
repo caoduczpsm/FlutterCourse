@@ -12,9 +12,8 @@ class BottomNavigation extends StatefulWidget{
 }
 
 class _BottomNavigationState extends State<BottomNavigation>{
+
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     FavoriteApp(),
     PavlovaRecipe(),
@@ -37,15 +36,15 @@ class _BottomNavigationState extends State<BottomNavigation>{
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
-            label: 'Home',
+            label: 'Favorites',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.receipt),
-            label: 'Business',
+            label: 'Pavlova Recipe',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.verified_user),
-            label: 'School',
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
