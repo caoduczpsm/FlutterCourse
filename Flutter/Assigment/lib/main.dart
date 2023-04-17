@@ -1,12 +1,14 @@
 
 import 'package:buoi_4_bai_1/buoi07/assignment/FavoriteApp.dart';
 import 'package:buoi_4_bai_1/buoi08/Assignment/Intro.dart';
+import 'package:buoi_4_bai_1/buoi08/CheckboxExtraTask/GetCheckBox.dart';
 import 'package:buoi_4_bai_1/buoi08/ExtraTask/CustomForm.dart';
 import 'package:flutter/material.dart';
+import 'buoi06/demo_task/navigationDemo.dart';
 import 'buoi07/extra/BottomNavigationApp.dart';
 
 void main() {
-  runApp(const CustomForm());
+  runApp(const GetCheckBok());
 }
 
 // class MyApp extends StatelessWidget {

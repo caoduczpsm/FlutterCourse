@@ -26,7 +26,7 @@ class MyCustomForm extends StatefulWidget{
 
 }
 
-enum OrderCharacter {ascending, descending}
+enum GenderCharacter {male, female}
 
 class _MyCustomFormState extends State<MyCustomForm>{
 
@@ -34,7 +34,15 @@ class _MyCustomFormState extends State<MyCustomForm>{
   final searchTerm = TextEditingController();
 
   var orderBy = "";
-  OrderCharacter _orderCharacter = OrderCharacter.ascending;
+  String _gender = "";
+  late GenderCharacter _genderCharacter;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _genderCharacter = GenderCharacter.male;
+  }
 
   @override
   void dispose() {
@@ -65,31 +73,32 @@ class _MyCustomFormState extends State<MyCustomForm>{
           ElevatedButton(
             onPressed: (){
               if(_formKey.currentState!.validate()){
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Processing Data'),
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('Your Information with Name ${searchTerm.text}, Gender: ${_gender}' ),
                 ));
               }
             },
             child: const Text('Submit'),
           ),
-          CheckboxListTile(
-            title: const Text('Asc'),
-            secondary: const Icon(Icons.onetwothree_rounded),
-            value: false,
-            onChanged: (value) {
+          RadioListTile(
+            title: const Text('Male'),
+            value: GenderCharacter.male,
+            groupValue: _genderCharacter,
+            onChanged: (GenderCharacter ? value) {
               setState(() {
-
+                _genderCharacter = value!;
+                _gender = GenderCharacter.male.name;
               });
             },
           ),
           RadioListTile(
-            title: const Text('Ascending'),
-            value: OrderCharacter.ascending,
-            groupValue: _orderCharacter,
-            onChanged: (OrderCharacter? value) {
+            title: const Text('Female'),
+            value: GenderCharacter.female,
+            groupValue: _genderCharacter,
+            onChanged: (GenderCharacter ? value) {
               setState(() {
-                _orderCharacter = value!;
-                orderBy = OrderCharacter.ascending.name;
+                _genderCharacter = value!;
+                _gender = GenderCharacter.female.name;
               });
             },
           )

@@ -8,6 +8,8 @@ class SignUpform extends StatefulWidget{
   State<SignUpform> createState() => _SignUpFromState();
 }
 
+enum GenderCharacter {male, female}
+
 class _SignUpFromState extends State<SignUpform> {
 
   final _formKey = GlobalKey<FormState>();
@@ -15,7 +17,9 @@ class _SignUpFromState extends State<SignUpform> {
   final passwordTerm = TextEditingController();
   final confirmPasswordTerm = TextEditingController();
   final emailTerm = TextEditingController();
-  int gender = 0;
+  String gender = "";
+
+  late GenderCharacter _genderCharacter;
 
   @override
   void dispose() {
@@ -25,6 +29,13 @@ class _SignUpFromState extends State<SignUpform> {
     passwordTerm.dispose();
     confirmPasswordTerm.dispose();
     emailTerm.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _genderCharacter = GenderCharacter.male;
   }
 
   @override
@@ -85,7 +96,7 @@ class _SignUpFromState extends State<SignUpform> {
                       style: inputFontSize,
                       controller: userNameTerm,
                       decoration: const InputDecoration(
-                        icon: Icon(Icons.supervised_user_circle),
+                        prefixIcon: Icon(Icons.supervised_user_circle),
                         border: UnderlineInputBorder(),
                         hintText: 'User name',
                       ),
@@ -100,7 +111,7 @@ class _SignUpFromState extends State<SignUpform> {
                       style: inputFontSize,
                       controller: passwordTerm,
                       decoration: const InputDecoration(
-                        icon: Icon(Icons.password_rounded),
+                        prefixIcon: Icon(Icons.password_rounded),
                         border: UnderlineInputBorder(),
                         hintText: 'Password',
                       ),
@@ -118,7 +129,7 @@ class _SignUpFromState extends State<SignUpform> {
                       style: inputFontSize,
                       controller: confirmPasswordTerm,
                       decoration: const InputDecoration(
-                        icon: Icon(Icons.password_sharp),
+                        prefixIcon: Icon(Icons.password_sharp),
                         border: UnderlineInputBorder(),
                         hintText: 'Confirm password',
                       ),
@@ -136,13 +147,17 @@ class _SignUpFromState extends State<SignUpform> {
                       style: inputFontSize,
                       controller: emailTerm,
                       decoration: const InputDecoration(
-                        icon: Icon(Icons.email),
+                        prefixIcon: Icon(Icons.email),
                         border: UnderlineInputBorder(),
                         hintText: 'Email',
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter some text';
+                        }
+                        RegExp emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                        if(!emailRegExp.hasMatch(value)){
+                          return 'Please enter email form';
                         }
                         return null;
                       },
@@ -167,24 +182,24 @@ class _SignUpFromState extends State<SignUpform> {
               //   children: [
               //     RadioListTile(
               //       title: const Text('Male'),
-              //       value: 0,
-              //       groupValue: gender,
+              //       value: GenderCharacter.male.name,
+              //       groupValue: _genderCharacter,
               //       onChanged: (value) {
               //         setState(() {
-              //           gender = int.parse(value.toString());
+              //           gender = GenderCharacter.male.name;
               //         });
               //       },
               //     ),
               //     RadioListTile(
-              //       title: const Text('Male'),
-              //       value: 1,
-              //       groupValue: gender,
+              //       title: const Text('Female'),
+              //       value: GenderCharacter.female.name,
+              //       groupValue: _genderCharacter,
               //       onChanged: (value) {
               //         setState(() {
-              //           gender = int.parse(value.toString());
+              //           gender = GenderCharacter.female.name;
               //         });
               //       },
-              //     )
+              //     ),
               //   ],
               // ),
             ],

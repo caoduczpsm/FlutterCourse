@@ -13,8 +13,6 @@ class _SignInFromState extends State<SignInform> {
   final _formKey = GlobalKey<FormState>();
   final userNameTerm = TextEditingController();
   final passwordTerm = TextEditingController();
-  final confirmPasswordTerm = TextEditingController();
-  final emailTerm = TextEditingController();
 
   bool isRemember = false;
 
@@ -24,8 +22,6 @@ class _SignInFromState extends State<SignInform> {
     super.dispose();
     userNameTerm.dispose();
     passwordTerm.dispose();
-    confirmPasswordTerm.dispose();
-    emailTerm.dispose();
   }
 
   @override
@@ -86,7 +82,7 @@ class _SignInFromState extends State<SignInform> {
                       style: inputFontSize,
                       controller: userNameTerm,
                       decoration: const InputDecoration(
-                        icon: Icon(Icons.supervised_user_circle),
+                        prefixIcon: Icon(Icons.supervised_user_circle),
                         border: UnderlineInputBorder(),
                         hintText: 'User name',
                       ),
@@ -101,7 +97,7 @@ class _SignInFromState extends State<SignInform> {
                       style: inputFontSize,
                       controller: passwordTerm,
                       decoration: const InputDecoration(
-                        icon: Icon(Icons.password_rounded),
+                        prefixIcon: Icon(Icons.password_rounded),
                         border: UnderlineInputBorder(),
                         hintText: 'Password',
                       ),
