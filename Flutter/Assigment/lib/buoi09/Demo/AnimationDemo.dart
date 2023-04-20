@@ -7,7 +7,7 @@ class AnimationDemo extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: _FadeInAnimation(),
+      home: _MyHome(),
     );
   }
 }
@@ -66,33 +66,38 @@ class _FadeInAnimationState extends State<_FadeInAnimation> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          child: Image.asset('images/owl.png'),
-        ),
-        TextButton(
-            onPressed: () {
-              setState(() {
-                opacity = 1;
-              });
-            },
-            child: const Text(
-              "Show Details",
-              style: TextStyle(color: Colors.blueAccent),
-            )
-        ),
-        AnimatedOpacity
-          (opacity: opacity,
-          duration: const Duration(seconds: 4),
-          child: Column(
-            children: const [
-              Text("Type: Bird"),
-              Text("Type: Owl"),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Fade In Animation"),
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            child: Image.asset('images/owl.png'),
           ),
-        )
-      ],
+          TextButton(
+              onPressed: () {
+                setState(() {
+                  opacity = 1;
+                });
+              },
+              child: const Text(
+                "Show Details",
+                style: TextStyle(color: Colors.blueAccent),
+              )
+          ),
+          AnimatedOpacity
+            (opacity: opacity,
+            duration: const Duration(seconds: 4),
+            child: Column(
+              children: const [
+                Text("Type: Bird"),
+                Text("Type: Owl"),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

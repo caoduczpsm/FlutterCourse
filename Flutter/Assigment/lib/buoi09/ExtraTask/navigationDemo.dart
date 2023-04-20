@@ -84,7 +84,6 @@ class _RandomWordsState extends State<RandomWords> {
 
   Route _createRoute() {
     return PageRouteBuilder(
-      settings: const RouteSettings(name: '/details'),
       pageBuilder: (context, animation, secondaryAnimation) =>
           DetailsScreen(saved: _saved, biggerFont: _biggerFont),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
