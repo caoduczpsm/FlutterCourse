@@ -82,4 +82,8 @@ class Constant{
   static const KEY_NOTE_PRIORITY_NAME = "priority_name";
   // ignore: constant_identifier_names
   static const KEY_NOTE_STATUS_NAME = "status_name";
+
+  // ignore: constant_identifier_names
+  static const KEY_STATUS_COUNT = "count";
+
 }

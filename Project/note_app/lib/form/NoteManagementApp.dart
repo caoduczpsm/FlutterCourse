@@ -34,8 +34,6 @@ class MyNoteManagementApp extends StatefulWidget {
 }
 
 class _MyNoteManagementAppState extends State<MyNoteManagementApp> {
-  // Biến để lưu trữ giao diện hiện tại
-  Widget _currentScreen = const HomeScreen();
 
   User user;
 
@@ -43,9 +41,18 @@ class _MyNoteManagementAppState extends State<MyNoteManagementApp> {
 
   _MyNoteManagementAppState({required this.user});
 
+  Widget? _currentScreen;
+
   final mainImage = Image.asset(
     'images/drawer_background.jpg',
   );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _currentScreen = HomeScreen(user: user);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +96,7 @@ class _MyNoteManagementAppState extends State<MyNoteManagementApp> {
               leading: const Icon(Icons.home),
               onTap: () {
                 setState(() {
-                  _currentScreen = const HomeScreen();
+                  _currentScreen = HomeScreen(user: user);
                   _selectedIndex = 0;
                 });
                 Navigator.pop(context);
