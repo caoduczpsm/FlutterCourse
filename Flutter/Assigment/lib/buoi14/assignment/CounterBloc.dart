@@ -3,13 +3,44 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class CounterEvent {}
+class CounterState {}
+
+class LoadingCounterState extends CounterState {}
+
+class SuccessCounterState extends CounterState {
+  int count = 0;
+  SuccessCounterState(this.count);
+}
+
+class CounterEvent {}
 
 class Increment extends CounterEvent {}
 
-class _CounterBloc extends Bloc<CounterEvent, int> {
-  _CounterBloc() : super(0) {
-    on<Increment>(((event, emit) => emit(state + 1)));
+class Decrement extends CounterEvent {}
+
+class _CounterBloc extends Bloc<CounterEvent, CounterState> {
+  int count = 0;
+
+  _CounterBloc() : super(SuccessCounterState(0)) {
+    on<CounterEvent>(((event, emit) {
+      if (event is Increment) {
+        _onIncrement(event, emit);
+      } else {
+        _onDecrement(event, emit);
+      }
+    }));
+  }
+
+  _onIncrement(CounterEvent event, Emitter<CounterState> emit) {
+    emit(LoadingCounterState());
+    count++;
+    emit(SuccessCounterState(count));
+  }
+
+  _onDecrement(CounterEvent event, Emitter<CounterState> emit) {
+    emit(LoadingCounterState());
+    count--;
+    emit(SuccessCounterState(count));
   }
 }
 
@@ -30,11 +61,15 @@ class _CounterPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<_CounterBloc, int>(builder: (context, count) {
-              return Text(
-                '$count',
-                style: Theme.of(context).textTheme.headline1,
-              );
+            BlocBuilder<_CounterBloc, CounterState>(builder: (context, state) {
+              if (state is SuccessCounterState) {
+                return Text(
+                  '${state.count}',
+                  style: Theme.of(context).textTheme.displayMedium,
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
             })
           ],
         ),
@@ -43,15 +78,28 @@ class _CounterPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8),
-            child: FloatingActionButton(
-              onPressed: () {
-                counterBloc.add(Increment());
-              },
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
-            ),
-          )
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {
+                      counterBloc.add(Increment());
+                    },
+                    tooltip: 'Increment',
+                    child: const Icon(Icons.add),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      counterBloc.add(Decrement());
+                    },
+                    tooltip: 'Decrement',
+                    child: const Icon(Icons.exposure_minus_1),
+                  ),
+                ],
+              ))
         ],
       ),
     );
@@ -69,9 +117,10 @@ class StateManagement extends StatelessWidget {
       ),
       home: BlocProvider<_CounterBloc>(
         create: (context) => _CounterBloc(),
-        child: const _CounterPage(title: "State Management using Bloc",),
+        child: const _CounterPage(
+          title: " State Management using Bloc",
+        ),
       ),
     );
   }
-
 }

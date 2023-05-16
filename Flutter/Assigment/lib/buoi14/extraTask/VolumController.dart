@@ -3,6 +3,15 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+class VolumeState {}
+
+class LoadingVolumeState extends VolumeState {}
+
+class SuccessVolumeState extends VolumeState {
+  int volume = 0;
+  SuccessVolumeState(this.volume);
+}
+
 abstract class VolumeEvent {}
 
 class VolumeUp extends VolumeEvent {}
@@ -11,15 +20,47 @@ class VolumeDown extends VolumeEvent {}
 
 class VolumeMute extends VolumeEvent {}
 
-class _VolumeControllerBloc extends Bloc<VolumeEvent, int> {
-  int tempVolumeMute = 0;
-  _VolumeControllerBloc() : super(0) {
-    on<VolumeUp>(((event, emit) =>
-        state < 100 ? {emit(state + 5), tempVolumeMute = state} : emit(state)));
-    on<VolumeDown>(((event, emit) =>
-        state > 0 ? {emit(state - 5), tempVolumeMute = state} : emit(state)));
-    on<VolumeMute>(
-        ((event, emit) => state == 0 ? emit(tempVolumeMute) : emit(0)));
+class _VolumeBloc extends Bloc<VolumeEvent, VolumeState> {
+  int volume = 0;
+  int tempVolume = 0;
+  _VolumeBloc() : super(SuccessVolumeState(0)) {
+    on<VolumeEvent>(((event, emit) {
+      if (event is VolumeUp) {
+        _onVolumeUp(event, emit);
+      } else if (event is VolumeDown){
+        _onVolumeDown(event, emit);
+      } else {
+        _onVolumeMute(event, emit);
+      }
+    }));
+  }
+
+  _onVolumeUp(VolumeEvent event, Emitter<VolumeState> emit) {
+    emit(LoadingVolumeState());
+    if(volume < 100) {
+      volume += 5;
+      tempVolume = volume;
+    }
+    emit(SuccessVolumeState(volume));
+  }
+
+  _onVolumeDown(VolumeEvent event, Emitter<VolumeState> emit) {
+    emit(LoadingVolumeState());
+    if(volume != 0) {
+      volume -= 5;
+      tempVolume = volume;
+    }
+    emit(SuccessVolumeState(volume));
+  }
+
+  _onVolumeMute(VolumeEvent event, Emitter<VolumeState> emit) {
+    emit(LoadingVolumeState());
+    if(volume != 0) {
+      volume = 0;
+    } else {
+      volume = tempVolume;
+    }
+    emit(SuccessVolumeState(volume));
   }
 }
 
@@ -31,7 +72,7 @@ class _VolumeControllerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final volumeControllerBloc =
-        BlocProvider.of<_VolumeControllerBloc>(context);
+        BlocProvider.of<_VolumeBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -41,13 +82,16 @@ class _VolumeControllerPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<_VolumeControllerBloc, int>(builder: (context, volume) {
-              return Text(
-                'Current volume value is $volume',
-                style: const TextStyle(
-                    fontSize: 30, fontWeight: FontWeight.normal),
-              );
-            }),
+            BlocBuilder<_VolumeBloc, VolumeState>(builder: (context, state) {
+              if (state is SuccessVolumeState) {
+                return Text(
+                  'Current volume value is: ${state.volume}',
+                  style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 25),
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            })
           ],
         ),
       ),
@@ -103,8 +147,8 @@ class VolumeStateManagement extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BlocProvider<_VolumeControllerBloc>(
-        create: (context) => _VolumeControllerBloc(),
+      home: BlocProvider<_VolumeBloc>(
+        create: (context) => _VolumeBloc(),
         child: const _VolumeControllerPage(
           title: " Volume State Management using Bloc",
         ),
