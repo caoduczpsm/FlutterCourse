@@ -1,12 +1,28 @@
 
+import 'package:buoi_4_bai_1/buoi15/extraTask/product/ProductPage.dart';
 import 'package:flutter/material.dart';
 
-import 'buoi13/assignment/TraineeList.dart';
-import 'buoi14/assignment/CounterBloc.dart';
-import 'buoi14/extraTask/VolumController.dart';
+import 'buoi15/assignment/MyCounterApp.dart';
+import 'buoi15/extraTask/weather/bloc/weather_bloc.dart';
+import 'buoi15/extraTask/weather/data/weather_repository.dart';
+import 'buoi15/extraTask/weather/page/weather_search_page.dart';
+import 'buoi15/extraTask/weather/weather_page.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(const VolumeStateManagement());
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Material App',
+      home: BlocProvider(
+        create: (context) => WeatherBloc(FakeWeatherRepository()),
+        child: const WeatherSearchPage(),
+      ),
+    );
+  }
 }
 
 // import 'package:buoi_4_bai_1/buoi13/extra/ListPage.dart';
